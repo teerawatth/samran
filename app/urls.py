@@ -12,4 +12,5 @@ urlpatterns = [
     path('permissions/<int:id>/',permissions,name='permissions'),
     path('permissions_no/<int:id>/',permissions_no,name='permissions_no'),
     path('reset/',reset,name='reset'),
+    path('cancel_booking/<int:id>/',cancel_booking,name='cancel_booking'),
 ]

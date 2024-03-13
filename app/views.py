@@ -6,7 +6,9 @@ from .forms import *
 
 def home(request):
     table = Table.objects.all()
-    return render(request,'home.html',{'table':table})
+    booking_list = Booking_drink.objects.filter(status=True,cancel=False)
+    print(booking_list)
+    return render(request,'home.html',{'table':table,'booking_list':booking_list})
 
 def sign_in(request):
     if request.method == 'POST':
@@ -48,15 +50,17 @@ def booking(request,id):
         table=table,
     )
     bookings.save()
+    table.user = request.user
+    table.save()
     return redirect('booking_list')
 
 @login_required
 def booking_list(request):
     if request.user.is_authenticated:
         if request.user.is_staff:
-            booking_list = Booking_drink.objects.all().order_by('-date')
+            booking_list = Booking_drink.objects.filter(cancel=False).order_by('-date')
         else:
-            booking_list = Booking_drink.objects.filter(user=request.user)
+            booking_list = Booking_drink.objects.filter(user=request.user,cancel=False)
     return render(request,'booking_list.html',{'booking_list':booking_list})
 
 def permissions(request,id):
@@ -67,6 +71,7 @@ def permissions(request,id):
 
     table = Table.objects.get(id=booking_list.table_id)
     table.status = True
+    table.user = booking_list.user
     table.save()
     return redirect('booking_list')
 
@@ -84,8 +89,21 @@ def permissions_no(request,id):
 
 def reset(request):
     tables = Table.objects.all()
+    booking_list = Booking_drink.objects.all()
+    for booking in booking_list:
+        booking.status = False
+        booking.cancel = True
+        booking.save()
+    # booking_list.cancel = True
     for table in tables:
         table.status = False
         table.save()
     return redirect('/')
+
+def cancel_booking(request,id):
+    booking_list = Booking_drink.objects.get(pk=id,user=request.user)
+    booking_list.cancel = True
+    booking_list.save()
+    return redirect('booking_list')
+
     

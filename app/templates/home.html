@@ -15,7 +15,7 @@
 
 </head>
 
-<body style="font-family: prompt;">
+<body style="font-family: prompt;" class="bg-gradient-to-r from-[#111738] to-[#9faaca]">
 
     <nav class="bg-gray-800">
         <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -144,16 +144,16 @@
 
                     <div class="border bg-slate-50 rounded-lg shadow-xl m-2">
                         <i class='bx bx-book-bookmark p-2 text-3xl rounded-lg'></i>
-                        <p class="p-2">โต๊ะ {{i.table}}</p>
+                        <p class="p-2">โต๊ะ {{ i.table }}</p>
                         {% if i.status == True %}
 
                         <p class="p-2">สถานะ :
                             <i class='bx bx-message-square-x mx-2 bg-red-500 border rounded-md px-2'></i>
-                            จองแล้ว
+                            จองแล้ว 
                         </p>
                         <a href="#" class="">
                             <div class="ml-4 mr-4 p-2 bg-red-600 border rounded-md px-2 mb-2">
-                                จองแล้ว
+                                จองแล้ว {{ i.user.first_name }} {{ i.user.last_name }}
                             </div>
                         </a>
 

@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Table(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
     table = models.IntegerField()
     status = models.BooleanField(default=False)
 
