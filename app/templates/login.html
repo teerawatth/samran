@@ -1,0 +1,28 @@
+{% extends 'home.html' %}
+
+{% block content %}
+
+<div class="text-center text-xl font-bold">
+    <p>เข้าสู่ระบบ</p>
+</div>
+
+<div class="flex justify-center gap-4 mt-10 mb-10">
+    <div class="container text-center">
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="mt-2">
+                <label for="" class="p-2">ชื่อผู้ใช้ : </label>
+                <input type="text" name="username" class="rounded-lg border p-2">
+            </div>
+            <div class="mt-2">
+                <label for="" class="p-2">รหัสผ่าน</label>
+                <input type="password" name="password" class="rounded-lg border p-2">
+            </div>
+            <div class="mt-2">
+                <button type="submit" class="bg-yellow-400 text-gray-800 rounded hover:scale-105 border border-gray-500 p-2">เข้าสู่ระบบ</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

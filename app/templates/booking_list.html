@@ -1,0 +1,71 @@
+{% extends 'home.html' %}
+
+{% block content %}
+
+<div class="text-center text-xl font-bold">
+    {% if user.is_staff %}
+    <p>การจอง</p>
+    {% else %}
+    <p>การจองของฉัน</p>
+    {% endif %}
+</div>
+
+<div class="mt-10 mb-10 flex justify-center">
+    <div class="container text-center rounded-xl">
+        <table class="table w-full border">
+            <thead class="">
+                <tr class="bg-slate-200">
+                    {% if user.is_staff %}
+                    <th class="p-2">ผู้จอง</th>
+                    {% endif %}
+                    <th class="p-2">โต๊ะ</th>
+                    <th class="p-2">วันที่</th>
+                    <th class="p-2">สถานะ</th>
+                    <th class="p-2">การยกเลิก</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for i in booking_list %}
+
+                <tr>
+                    {% if user.is_staff %}
+                    <td class="p-2">{{ i.user.first_name }} {{ i.user.last_name }}</td>
+                    {% endif %}
+                    <td class="p-2">{{ i.table.table }}</td>
+                    <td class="p-2">{{ i.date }}</td>
+                    <td class="p-2">
+                        {% if i.status == True %}
+                        อนุมัติ
+                        {% elif i.cancel == True %}
+                        ไม่อนุมัติ
+                        {% else %}
+                        รอดำเนินการ
+                        {% endif %}
+                    </td>
+                    <td class="p-2 flex justify-center">
+                        {% if user.is_staff %}
+                        <div class="my-1 hover:scale-105">
+                            <a href="{% url 'permissions' i.id %}"
+                                class="px-2 bg-green-500 rounded-md border border-red-400 text-white mx-2">อนุมัติ</a>
+                        </div>
+                        <div class="my-1 hover:scale-105">
+                            <a href="{% url 'permissions_no' i.id %}"
+                                class="px-2 bg-red-600 rounded-md border border-red-700 text-white mx-2">ไม่อนุมัติ</a>
+                        </div>
+                        {% else %}
+                        <div class="my-1 hover:scale-105">
+                            <a href="#"
+                                class="px-2 bg-red-600 rounded-md border border-red-700 text-white mx-2">ยกเลิก</a>
+                        </div>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

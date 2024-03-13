@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+</head>
+
+<body style="font-family: prompt;">
+
+    <nav class="bg-gray-800">
+        <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+            <div class="relative flex h-16 items-center justify-between">
+                <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+                    <!-- Mobile menu button-->
+                    <button type="button"
+                        class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                        aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="absolute -inset-0.5"></span>
+                        <span class="sr-only">Open main menu</span>
+                        <!--
+                  Icon when menu is closed.
+      
+                  Menu open: "hidden", Menu closed: "block"
+                -->
+                        <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                        </svg>
+                        <!--
+                  Icon when menu is open.
+      
+                  Menu open: "block", Menu closed: "hidden"
+                -->
+                        <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+                    <div class="flex flex-shrink-0 items-center">
+                        <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                            alt="Your Company">
+                    </div>
+                    <div class="hidden sm:ml-6 sm:block">
+                        <div class="flex space-x-4">
+                            <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+                            <a href="/" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
+                                aria-current="page">Dashboard</a>
+                            <a href="#"
+                                class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Team</a>
+                            <a href="#"
+                                class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Projects</a>
+
+                            {% if user.is_authenticated %}
+                            <a href="{% url 'profile' %}"
+                                class="text-gray-200 hover:bg-gray-700 bg-gray-500 hover:text-white rounded-md px-3 py-2 text-sm font-medium">
+                                {{user }} {{user.first_name }} {{user.last_name }}</a>
+                            <a href="{% url 'logout' %}"
+                                class="text-gray-200 hover:bg-gray-700 bg-red-500 hover:text-white rounded-md px-3 py-2 text-sm font-medium">ออกจากระบบ</a>
+                            {% else %}
+                            <a href="{% url 'login' %}"
+                                class="text-gray-800 hover:bg-yellow-700 bg-yellow-500 hover:text-white rounded-md px-3 py-2 text-sm font-medium">เข้าสู่ระบบ</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                    <button type="button"
+                        class="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                        <span class="absolute -inset-1.5"></span>
+                        <span class="sr-only">View notifications</span>
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                            aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+                        </svg>
+                    </button>
+                    {% if user.is_staff %}
+                    <a href="{% url 'booking_list' %}"
+                        class=" hover:bg-slate-700 bg-slate-600 text-white hover:text-white rounded-md px-3 py-2 text-sm font-medium">ดูการจอง</a>
+                    {% else %}
+                    <a href="{% url 'booking_list' %}"
+                        class=" hover:bg-slate-700 bg-slate-600 text-white hover:text-white rounded-md px-3 py-2 text-sm font-medium">การจองของฉัน</a>
+                    {% endif %}
+
+
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu, show/hide based on menu state. -->
+        <div class="sm:hidden" id="mobile-menu">
+            <div class="space-y-1 px-2 pb-3 pt-2">
+                <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+                <a href="#" class="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium"
+                    aria-current="page">Dashboard</a>
+                <a href="#"
+                    class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Team</a>
+                <a href="#"
+                    class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Projects</a>
+                <a href="#"
+                    class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Calendar</a>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="mt-10">
+        {% block content %}
+        <div class="text-center text-xl font-bold">
+            <p>รายการจองโต๊ะ</p>
+        </div>
+
+        <div class="flex justify-center gap-4 mt-10 mb-10">
+            <div class="container text-center">
+                {% if user.is_staff %}
+                <div class="grid grid-cols-4 gap-4">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div class="flex justify-center p-2 hover:scale-105  overflow-hidden">
+                        <div class="text-center p-2">
+                        <a href="{% url 'reset' %}" class="text-lg bg-red-600 p-2 px-5 rounded-lg text-center"><i class='bx bx-revision px-5'></i>รีเซ็ต</a>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                <div class="grid md:grid-cols-4 md:gap-4 grid-cols-2 gap-2 md:text-lg text-sm">
+
+                    {% for i in table %}
+
+                    <div class="border bg-slate-50 rounded-lg shadow-xl m-2">
+                        <i class='bx bx-book-bookmark p-2 text-3xl rounded-lg'></i>
+                        <p class="p-2">โต๊ะ {{i.table}}</p>
+                        {% if i.status == True %}
+
+                        <p class="p-2">สถานะ :
+                            <i class='bx bx-message-square-x mx-2 bg-red-500 border rounded-md px-2'></i>
+                            จองแล้ว
+                        </p>
+                        <a href="#" class="">
+                            <div class="ml-4 mr-4 p-2 bg-red-600 border rounded-md px-2 mb-2">
+                                จองแล้ว
+                            </div>
+                        </a>
+
+                        {% else %}
+
+                        <p class="p-2">สถานะ :
+                            <i class='bx bx-check mx-2 bg-green-500  border rounded-md px-2'></i> พร้อมจอง
+                        </p>
+                        <a href="{% url 'booking' i.id %}" class="">
+                            <div class="ml-4 mr-4 p-2 bg-green-600 hover:scale-105  border rounded-md px-2 mb-2">
+                                กดจอง
+                            </div>
+                        </a>
+
+                        {% endif %}
+
+                    </div>
+
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        {% endblock %}
+    </div>
+
+
+</body>
+
+</html>
